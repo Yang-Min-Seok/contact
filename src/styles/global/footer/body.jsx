@@ -3,7 +3,7 @@ function Body() {
 
     return (
         <BodyDiv>
-            <p>ⓒ 2023. TAXIMATE all rights reserved.</p>
+            <p>ⓒ 2024. Contact kurooru all rights reserved.</p>
         </BodyDiv>
     );
 }

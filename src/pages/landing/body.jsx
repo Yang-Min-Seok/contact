@@ -32,16 +32,23 @@ function Body() {
         
     };
 
-    const handle_onclick_start_btn = (e) => {
-        if (Number(court_num) >= 1 && Number(ppl_num) >= 4) {
-            console.log(`court_num : ${court_num}, ppl_num : ${ppl_num}`);
-            navigate(`/courts`, {state : {court_num : court_num, ppl_num : ppl_num}});
-        } else if (Number(court_num) < 1){
-            alert('最低１コート以上入力してください');
-        } else {
-            alert('最低４人以上入力してください');
+    const is_proper_num = (court_num, ppl_num) => {
+        court_num = Number(court_num);
+        ppl_num = Number(ppl_num);
+        if (court_num < 1 || ppl_num < 4) {
+            alert('コート数と人数を確認してください。');
+            return false;
+        } else if ((court_num * 4 - 4)  >= ppl_num) {
+            alert('コート数と人数を確認してください。')
+            return false;
         }
-        
+        return true;
+    }
+
+    const handle_onclick_start_btn = (e) => {
+        if (is_proper_num(court_num, ppl_num)) {
+            navigate(`/courts`, {state : {court_num : court_num, ppl_num : ppl_num}});
+        }
     };
 
     useEffect(() => {

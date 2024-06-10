@@ -1,5 +1,66 @@
 import styled from "styled-components";
 
 export const BodyDiv = styled.div`
-
+    height: 600px;
+    margin-top: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    table{
+        font-family: sans-serif;
+        border-collapse: collapse;
+        border: 2px solid brown;
+        box-sizing: border-box;
+        width: 90%;
+        height : 90%;
+        margin: 0 auto;
+        tr:nth-child(1) {
+            height: calc(100% / 11);
+            th {
+                padding: 0;
+                border: 2px solid brown;
+                box-sizing: border-box;
+                font-size: 120%;
+            }   
+        }
+        tr {
+            td {
+                text-align: center;
+                padding: 0;
+                border: 2px solid brown;
+                box-sizing: border-box;
+                font-size: 100%;
+            }
+        }
+    }
+    div:nth-child(2) {
+        display: flex;
+        width: 80%;
+        margin: 0 auto;
+        justify-content: space-around;
+        p{
+            margin: 0 auto;
+            margin-top: 3%;
+            font-size: 120%;
+            line-height: 3;
+            width: 27%;
+            text-align: center;
+            border: 2px solid brown;
+            box-sizing: border-box;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+    }
+    p:nth-child(3) {
+        margin: 0 auto;
+        margin-top: 3%;
+        font-size: 120%;
+        line-height: 2.5;
+        width: 30%;
+        text-align: center;
+        border: 2px solid red;
+        box-sizing: border-box;
+        border-radius: 20px;
+        font-weight: 600;
+    }
 `

@@ -1,7 +1,7 @@
 import { BodyDiv } from "./style";
 import useInput from "../../hooks/useInput";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Body() {
     
@@ -33,16 +33,27 @@ function Body() {
     };
 
     const handle_onclick_start_btn = (e) => {
-        if (court_num !== '0' && ppl_num !== '0') {
+        if (Number(court_num) >= 1 && Number(ppl_num) >= 4) {
             console.log(`court_num : ${court_num}, ppl_num : ${ppl_num}`);
             navigate(`/courts`, {state : {court_num : court_num, ppl_num : ppl_num}});
-        } else if (court_num === '0'){
-            alert('check court_num');
+        } else if (Number(court_num) < 1){
+            alert('最低１コート以上入力してください');
         } else {
-            alert('check ppl_num');
+            alert('最低４人以上入力してください');
         }
         
     };
+
+    useEffect(() => {
+        const start_btn = document.getElementById('start_btn');
+        if (Number(court_num) >= 1 && ppl_num >= 4) {
+            start_btn.style.color = `#fff`;
+            start_btn.style.backgroundColor = 'brown';
+        } else {
+            start_btn.style.color = `red`;
+            start_btn.style.backgroundColor = `#fff`;
+        }
+    }, [court_num, ppl_num])
 
     return (
         <BodyDiv>
@@ -56,7 +67,7 @@ function Body() {
             <h3><span>STEP2 </span>人数を設定してください</h3>
             <p><input type="number" name="" id="" placeholder="例) 8" onChange={on_change_ppl_num}/> 名</p>
             <h3><span>STEP3 </span>スタートボタンを押してください</h3>
-            <button type="button" onClick={handle_onclick_start_btn}>スタート</button>
+            <button id="start_btn" type="button" onClick={handle_onclick_start_btn}>スタート</button>
         </BodyDiv>
     )
 }

@@ -86,6 +86,7 @@ export const BodyDiv = styled.div`
         padding: 0;
         color: red;
         font-weight: 600;
+        transition: all 0.7s;
     }
 
 `

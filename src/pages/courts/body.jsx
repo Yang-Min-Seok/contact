@@ -9,6 +9,18 @@ function Body() {
     const ppl_num = location.state.ppl_num;
     const [ curr_game, set_curr_game ] = useState(1);
 
+    // 수정 가능
+    const game_num = 15; // html은 직접 수정 필요
+
+    const fill_table = (court_num, ppl_num) => {
+        for (let i = 1; i <= game_num; i++) {
+            for (let j = 1; j <= court_num; j++) {
+                const curr_game_court = document.getElementById(`game_${i}_court_${j}`);
+                console.log(curr_game_court);
+            }
+        }
+    }
+    
     const handleOnClickBtns = (e) => {
         const order = e.target.id;
         if (order === 'prevBtn') {
@@ -16,7 +28,7 @@ function Body() {
                 set_curr_game(curr_game - 1);
             }
         } else if (order === 'nextBtn') {
-            if(curr_game !== 15) {
+            if(curr_game !== game_num) {
                 set_curr_game(curr_game + 1);
             }
         } else if (order === 'exitBtn') {
@@ -37,18 +49,18 @@ function Body() {
             `
         }
 
-        for (let i = 1; i < 16; i++) {
-            const table_body = document.getElementById('table').children[i];
+        for (let i = 1; i <= game_num; i++) {
+            const table_body = document.getElementById(`game_${i}`);
             table_body.innerHTML = ``;
             for (let j = 0; j < court_num; j++) {
                 const prev_body = table_body.innerHTML;
                 table_body.innerHTML = prev_body + `
-                    <td>dum data</td>
+                    <td id="game_${i}_court_${j+1}">dummy</td>
                 `
             }
         }
 
-        for (let i = 1; i <= 15; i++) {
+        for (let i = 1; i <= game_num; i++) {
             const game_tr = document.getElementById(`game_${i}`);
             game_tr.style.backgroundColor = '#fff';
             game_tr.style.color = '#000';
@@ -61,6 +73,7 @@ function Body() {
 
     useEffect(() => {
         make_table_frame(court_num, curr_game);
+        fill_table(court_num, ppl_num);
     }, [curr_game])
 
     return (

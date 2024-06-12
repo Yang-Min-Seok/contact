@@ -1,20 +1,39 @@
 import { BodyDiv } from "./style";
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 function Body() {
     
     const location = useLocation();
+    const navigate = useNavigate();
     const court_num = location.state.court_num;
     const ppl_num = location.state.ppl_num;
-    console.log(`court num : ${court_num} ppl num : ${ppl_num}`);
+    const [ curr_game, set_curr_game ] = useState(1);
 
-    const make_table_frame = (court_num) => {
+    const handleOnClickBtns = (e) => {
+        const order = e.target.id;
+        if (order === 'prevBtn') {
+            if (curr_game !== 1) {
+                set_curr_game(curr_game - 1);
+            }
+        } else if (order === 'nextBtn') {
+            if(curr_game !== 15) {
+                set_curr_game(curr_game + 1);
+            }
+        } else if (order === 'exitBtn') {
+            const ans = window.confirm('本当に戻りますか？');
+            if (ans) {
+                navigate('/');
+            }
+        }
+    }
+
+    const make_table_frame = (court_num, curr_game) => {
         const table_head = document.getElementById('table').children[0];
         table_head.innerHTML = ``;
         for (let i = 1; i <= court_num; i++) {
             const prev_head = table_head.innerHTML;
             table_head.innerHTML = prev_head + `
-                <th>Court ${i}</th>
+                <th>コート ${i}</th>
             `
         }
 
@@ -28,12 +47,21 @@ function Body() {
                 `
             }
         }
-        
+
+        for (let i = 1; i <= 15; i++) {
+            const game_tr = document.getElementById(`game_${i}`);
+            game_tr.style.backgroundColor = '#fff';
+            game_tr.style.color = '#000';
+        }
+
+        const curr_game_tr = document.getElementById(`game_${curr_game}`);
+        curr_game_tr.style.backgroundColor = '#AE905E';
+        curr_game_tr.style.color = '#fff';
     }
 
     useEffect(() => {
-        make_table_frame(court_num);
-    }, [])
+        make_table_frame(court_num, curr_game);
+    }, [curr_game])
 
     return (
         <BodyDiv>
@@ -41,27 +69,27 @@ function Body() {
                 {/* header */}
                 <tr></tr>
                 {/* content */}
-                <tr></tr>
-                <tr></tr>
-                <tr></tr>
-                <tr></tr>
-                <tr></tr>
-                <tr></tr>
-                <tr></tr>
-                <tr></tr>
-                <tr></tr>
-                <tr></tr>
-                <tr></tr>
-                <tr></tr>
-                <tr></tr>
-                <tr></tr>
-                <tr></tr>
+                <tr id="game_1"></tr>
+                <tr id="game_2"></tr>
+                <tr id="game_3"></tr>
+                <tr id="game_4"></tr>
+                <tr id="game_5"></tr>
+                <tr id="game_6"></tr>
+                <tr id="game_7"></tr>
+                <tr id="game_8"></tr>
+                <tr id="game_9"></tr>
+                <tr id="game_10"></tr>
+                <tr id="game_11"></tr>
+                <tr id="game_12"></tr>
+                <tr id="game_13"></tr>
+                <tr id="game_14"></tr>
+                <tr id="game_15"></tr>
             </table>
             <div>
-                <p>Prev</p>
-                <p>Next</p>
+                <p id="prevBtn" onClick={handleOnClickBtns}>Prev</p>
+                <p id="nextBtn" onClick={handleOnClickBtns}>Next</p>
             </div>
-            <p>Exit</p>
+            <p id="exitBtn" onClick={handleOnClickBtns}>Exit</p>
         </BodyDiv>
     )
 }

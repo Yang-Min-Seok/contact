@@ -15,12 +15,12 @@ export const BodyDiv = styled.div`
         height : 90%;
         margin: 0 auto;
         tr:nth-child(1) {
-            height: calc(100% / 11);
             th {
                 padding: 0;
                 border: 2px solid brown;
                 box-sizing: border-box;
                 font-size: 120%;
+                line-height: 1.3;
             }   
         }
         tr {

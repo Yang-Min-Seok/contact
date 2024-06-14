@@ -13,12 +13,7 @@ function Body() {
     const game_num = 15; // html은 직접 수정 필요
 
     const fill_table = (court_num, ppl_num) => {
-        for (let i = 1; i <= game_num; i++) {
-            for (let j = 1; j <= court_num; j++) {
-                const curr_game_court = document.getElementById(`game_${i}_court_${j}`);
-                console.log(curr_game_court);
-            }
-        }
+        
     }
     
     const handleOnClickBtns = (e) => {

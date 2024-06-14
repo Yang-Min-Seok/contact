@@ -6,8 +6,9 @@ import { useState, useEffect } from "react";
 function Body() {
     
     const navigate = useNavigate();
-    const [ court_num, set_court_num ] = useState('0');
-    const [ ppl_num, on_change_ppl_num, set_ppl_num ] = useInput('0');
+    const [ court_num, set_court_num ] = useState(0);
+    const [ ppl_num, on_change_ppl_num, set_ppl_num ] = useInput(0);
+    const [ game_num, on_chage_game_num, set_game_num ] = useInput(0);
 
     const handle_onclick_courts_num = (e) => {
         try{
@@ -32,35 +33,43 @@ function Body() {
         
     };
 
-    const is_proper_num = (court_num, ppl_num) => {
+    const is_proper_num = (court_num, ppl_num, game_num) => {
         court_num = Number(court_num);
         ppl_num = Number(ppl_num);
-        if (court_num < 1 || ppl_num < 4) {
-            alert('コート数と人数を確認してください。');
+        game_num  = Number(game_num);
+        if (court_num <= 0) {
+            alert('正しいコート数を入力して下さい。');
             return false;
-        } else if ((court_num * 4 - 4)  >= ppl_num) {
-            alert('コート数と人数を確認してください。')
+        } else if (ppl_num <= 0) {
+            alert ('正しい人数を入力して下さい。');
+            return false;
+        } else if (game_num <= 0) {
+            alert ('正しいゲーム数を入力して下さい。');
+            return false;
+        }
+        else if (ppl_num < court_num * 4) {
+            alert('コート数と人数が合わないです。\n(コート数 * 4 は 人数より小さくなるべきです。)');
             return false;
         }
         return true;
     }
 
     const handle_onclick_start_btn = (e) => {
-        if (is_proper_num(court_num, ppl_num)) {
-            navigate(`/courts`, {state : {court_num : court_num, ppl_num : ppl_num}});
+        if (is_proper_num(court_num, ppl_num, game_num)) {
+            navigate(`/courts`, {state : {court_num : court_num, ppl_num : ppl_num, game_num : game_num}});
         }
     };
 
     useEffect(() => {
         const start_btn = document.getElementById('start_btn');
-        if (Number(court_num) >= 1 && ppl_num >= 4) {
+        if (court_num !== 0 && ppl_num !== 0 && game_num !== 0) {
             start_btn.style.color = `#fff`;
             start_btn.style.backgroundColor = 'brown';
         } else {
             start_btn.style.color = `red`;
             start_btn.style.backgroundColor = `#fff`;
         }
-    }, [court_num, ppl_num])
+    }, [court_num, ppl_num, game_num])
 
     return (
         <BodyDiv>
@@ -73,7 +82,9 @@ function Body() {
             </ul>
             <h3><span>STEP2 </span>人数を設定してください</h3>
             <p><input type="number" name="" id="" placeholder="例) 8" onChange={on_change_ppl_num}/> 名</p>
-            <h3><span>STEP3 </span>スタートボタンを押してください</h3>
+            <h3><span>STEP3 </span>ゲーム数を設定してください</h3>
+            <p><input type="number" name="" id="" placeholder="例) 10" onChange={on_chage_game_num}/> ゲーム</p>
+            <h3><span>STEP4 </span>スタートボタンを押してください</h3>
             <button id="start_btn" type="button" onClick={handle_onclick_start_btn}>スタート</button>
         </BodyDiv>
     )

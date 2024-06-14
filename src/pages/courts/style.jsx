@@ -14,24 +14,34 @@ export const BodyDiv = styled.div`
         width: 90%;
         height : 90%;
         margin: 0 auto;
-        tr:nth-child(1) {
-            th {
-                padding: 0;
-                border: 2px solid brown;
-                box-sizing: border-box;
-                font-size: 120%;
-                line-height: 1.3;
-            }   
-        }
-        tr {
-            td {
-                text-align: center;
-                padding: 0;
-                border: 2px solid brown;
-                box-sizing: border-box;
-                font-size: 100%;
+        overflow: scroll;
+        thead{
+            tr{
+                td {
+                    text-align: center;
+                    padding: 0;
+                    border: 2px solid brown;
+                    box-sizing: border-box;
+                    font-size: 130%;
+                    line-height: 2;
+                    font-weight: 700;
+                    color: #AE905E;
+                }   
             }
         }
+
+        tbody{
+            tr {
+                td {
+                    text-align: center;
+                    padding: 0;
+                    border: 2px solid brown;
+                    box-sizing: border-box;
+                    font-size: 100%;
+                }
+            }
+        }
+        
     }
     div:nth-child(2) {
         display: flex;
@@ -40,7 +50,7 @@ export const BodyDiv = styled.div`
         justify-content: space-around;
         p{
             margin: 0 auto;
-            margin-top: 3%;
+            margin-top: 5%;
             font-size: 120%;
             line-height: 3;
             width: 27%;

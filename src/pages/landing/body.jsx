@@ -70,7 +70,7 @@ function Body() {
             start_btn.style.backgroundColor = `#fff`;
         }
     }, [court_num, ppl_num, game_num])
-    console.log(`court num : ${court_num} ppl num : ${ppl_num} game num : ${game_num}`);
+    
     return (
         <BodyDiv>
             <h3><span>STEP1 </span>コート数を設定してください</h3>

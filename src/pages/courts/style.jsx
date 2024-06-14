@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const BodyDiv = styled.div`
-    height: 600px;
+    height: 800px;
     margin-top: 5%;
     display: flex;
     flex-direction: column;

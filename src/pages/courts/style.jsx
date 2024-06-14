@@ -38,6 +38,7 @@ export const BodyDiv = styled.div`
                     border: 2px solid brown;
                     box-sizing: border-box;
                     font-size: 100%;
+                    font-weight: 600;
                 }
             }
         }

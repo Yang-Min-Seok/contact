@@ -38,17 +38,13 @@ function Body() {
         ppl_num = Number(ppl_num);
         game_num  = Number(game_num);
         if (court_num <= 0) {
-            alert('正しいコート数を入力して下さい。');
             return false;
         } else if (ppl_num <= 0) {
-            alert ('正しい人数を入力して下さい。');
             return false;
         } else if (game_num <= 0) {
-            alert ('正しいゲーム数を入力して下さい。');
             return false;
         }
         else if (ppl_num < court_num * 4) {
-            alert('コート数と人数が合わないです。\n(コート数 * 4 は 人数より小さくなるべきです。)');
             return false;
         }
         return true;
@@ -70,6 +66,42 @@ function Body() {
             start_btn.style.backgroundColor = `#fff`;
         }
     }, [court_num, ppl_num, game_num])
+
+    useEffect(() => {
+        const target_condition = document.getElementById('condition1');
+        if (court_num > 0) {       
+            target_condition.style.color = `green`;
+        } else {
+            target_condition.style.color = `red`;
+        }
+    }, [court_num])
+    
+    useEffect(() => {
+        const target_condition = document.getElementById('condition2');
+        if (ppl_num > 0) {       
+            target_condition.style.color = `green`;
+        } else {
+            target_condition.style.color = `red`;
+        }
+    }, [ppl_num])
+    
+    useEffect(() => {
+        const target_condition = document.getElementById('condition3');
+        if (game_num > 0) {       
+            target_condition.style.color = `green`;
+        } else {
+            target_condition.style.color = `red`;
+        }
+    }, [game_num])
+    
+    useEffect(() => {
+        const target_condition = document.getElementById('condition4');
+        if (court_num !== 0 && ppl_num >= court_num * 4) {       
+            target_condition.style.color = `green`;
+        } else {
+            target_condition.style.color = `red`;
+        }
+    }, [court_num, ppl_num])
     
     return (
         <BodyDiv>
@@ -85,6 +117,12 @@ function Body() {
             <h3><span>STEP3 </span>ゲーム数を設定してください</h3>
             <p><input type="number" name="" id="" placeholder="例) 10" onChange={on_chage_game_num}/> ゲーム</p>
             <h3><span>STEP4 </span>スタートボタンを押してください</h3>
+            <p id="condition1">* コート数が正しくありません</p>
+            <p id="condition2">* 人数が正しくありません</p>
+            <p id="condition3">* ゲーム数が正しくありません</p>
+            <p id="condition4">* コート数と人数が正しくありません<br></br>
+                (人数はコート数の４倍以上になるべきです)
+            </p>
             <button id="start_btn" type="button" onClick={handle_onclick_start_btn}>スタート</button>
         </BodyDiv>
     )

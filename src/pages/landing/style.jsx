@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const BodyDiv = styled.div`
     
     font-family: sans-serif;
-    height: 500px;
+    height: 600px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -101,7 +101,24 @@ export const BodyDiv = styled.div`
         font-size: 130%;
     }
 
-    button:nth-child(8) {
+    p:nth-child(8),
+    p:nth-child(9),
+    p:nth-child(10),
+    p:nth-child(11){
+        margin: 0 auto;
+        font-size: 100%;
+        line-height: 1.5;
+        display: inline-block;
+        width: 80%;
+        font-weight: 500;
+        color: red;
+    }
+    
+    p:nth-child(11) {
+        margin-bottom: 4%;
+    }
+
+    button:nth-child(12) {
         display: block;
         margin: 0 auto;
         background-color: #fff;

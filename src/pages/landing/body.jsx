@@ -62,7 +62,7 @@ function Body() {
 
     useEffect(() => {
         const start_btn = document.getElementById('start_btn');
-        if (court_num > 0 && ppl_num > 0 && game_num > 0) {
+        if ((court_num > 0 && ppl_num > 0 && game_num > 0) && (ppl_num >= court_num * 4)) {
             start_btn.style.color = `#fff`;
             start_btn.style.backgroundColor = 'brown';
         } else {

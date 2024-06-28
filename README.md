@@ -8,7 +8,7 @@
 
 ---
 
-<img align="center" width="433" alt="스크린샷 2024-06-28 22 13 59" src="https://github.com/Yang-Min-Seok/contact/assets/83502596/ad4c7192-26e5-4b69-8cda-c52fee36dd93">
+<img width="433" alt="스크린샷 2024-06-28 22 13 59" src="https://github.com/Yang-Min-Seok/contact/assets/83502596/ad4c7192-26e5-4b69-8cda-c52fee36dd93">
 
 ---
 

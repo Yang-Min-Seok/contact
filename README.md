@@ -4,7 +4,7 @@
 
 バドミントンコートの配分WEBサイト
 
-<h1>リンク：https://contact-eta-gules.vercel.app/</h1>
+#### リンク：https://contact-eta-gules.vercel.app/
 
 ---
 

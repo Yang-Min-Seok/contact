@@ -2,11 +2,26 @@ import styled from "styled-components";
 
 export const BodyDiv = styled.div`
     height: 800px;
-    margin-top: 5%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    table{
+
+    p:nth-child(1) {
+        margin: 3% auto;
+        display: block;
+        width: 30%;
+        font-family: sans-serif;
+        font-size: 120%;
+        font-weight: 500;
+        color: brown;
+        line-height: 2;
+        text-align: center;
+        border: 2px solid brown;
+        box-sizing: border-box;
+        border-radius: 10px;
+    }
+
+    table:nth-child(2) {
         font-family: sans-serif;
         border-collapse: collapse;
         border: 2px solid brown;
@@ -37,14 +52,14 @@ export const BodyDiv = styled.div`
                     padding: 0;
                     border: 2px solid brown;
                     box-sizing: border-box;
-                    font-size: 100%;
+                    font-size: 110%;
                     font-weight: 600;
                 }
             }
         }
-        
     }
-    div:nth-child(2) {
+
+    div:nth-child(3) {
         display: flex;
         width: 80%;
         margin: 0 auto;
@@ -60,9 +75,11 @@ export const BodyDiv = styled.div`
             box-sizing: border-box;
             border-radius: 20px;
             font-weight: 600;
+            color: #000;
         }
     }
-    p:nth-child(3) {
+
+    p:nth-child(4) {
         margin: 0 auto;
         margin-top: 3%;
         font-size: 120%;

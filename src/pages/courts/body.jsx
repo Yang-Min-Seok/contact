@@ -121,6 +121,7 @@ function Body() {
 
     return (
         <BodyDiv>
+            <p>詳しく見る</p>
             <table>
                 <thead>
                     <tr id="table_head">

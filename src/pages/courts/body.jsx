@@ -11,6 +11,7 @@ function Body() {
     const game_num = Number(location.state.game_num);
     const [ curr_game, set_curr_game ] = useState(0);
     const [ tableData, setTableData ] = useState([]);
+    const [ popUp, setPopUp ] = useState(false);
     
     const handleOnClickBtns = (e) => {
         const order = e.target.id;
@@ -110,6 +111,10 @@ function Body() {
         }
     }
 
+    const handleOnClickPopUpBtn = () => {
+        setPopUp(true);
+    }
+
     useEffect(() => {
         make_table_frame();
         fill_table();
@@ -121,7 +126,7 @@ function Body() {
 
     return (
         <BodyDiv>
-            <p>詳しく見る</p>
+            <p onClick={handleOnClickPopUpBtn}>詳しく見る</p>
             <table>
                 <thead>
                     <tr id="table_head">

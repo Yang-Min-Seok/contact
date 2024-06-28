@@ -11,6 +11,7 @@ function Body() {
     const game_num = Number(location.state.game_num);
     const [ curr_game, set_curr_game ] = useState(0);
     const [ tableData, setTableData ] = useState([]);
+    const [ popUp, setPopUp ] = useState(false);
     
     const handleOnClickBtns = (e) => {
         const order = e.target.id;
@@ -110,6 +111,49 @@ function Body() {
         }
     }
 
+    const handleOnClickPopUpBtn = (e) => {
+        const target = e.target.id;
+        if (target === 'popUpBtn' || target === 'popUpOverlay'){
+            setPopUp(!popUp);
+        }
+    }
+    
+    const fillPopUpTable = () => {
+        if (popUp) {
+            const popUpTableBody = document.getElementById('popUpTableBody');
+            popUpTableBody.innerHTML = ``;
+            for (let i = 0; i < ppl_num; i++) {
+                const prev_body = popUpTableBody.innerHTML;
+                popUpTableBody.innerHTML = prev_body + `
+                    <tr>
+                        <td id="ppl_${i}">${i+1}</td>
+                        <td id="ppl_${i}_game"></td>
+                    </tr>
+                `
+            }
+
+            const gameCnt = [];
+            for (let i = 0; i < ppl_num; i++) {
+                gameCnt.push(0);
+            }
+            
+            for (let i = 0; i < game_num; i++) {
+                for (let j = 0; j < court_num; j++) {
+                    const curr_game_list = document.getElementById(`game_${i}_court_${j}`).innerHTML.split(' ');
+                    for (let k = 0; k < 4; k++) {
+                        const target = Number(curr_game_list[k]);
+                        gameCnt[target - 1]++;
+                    }
+                }
+            }
+
+            for (let i = 0; i < ppl_num; i++) {
+                const target = document.getElementById(`ppl_${i}_game`);
+                target.innerText = gameCnt[i];
+            }
+        }
+    }
+
     useEffect(() => {
         make_table_frame();
         fill_table();
@@ -119,8 +163,13 @@ function Body() {
         point_curr_game();
     }, [curr_game])
 
+    useEffect(() => {
+        fillPopUpTable();
+    }, [popUp])
+
     return (
         <BodyDiv>
+            <p id="popUpBtn" onClick={handleOnClickPopUpBtn}>一人当たりのゲーム数を見る</p>
             <table>
                 <thead>
                     <tr id="table_head">
@@ -134,6 +183,24 @@ function Body() {
                 <p id="nextBtn" onClick={handleOnClickBtns}>Next</p>
             </div>
             <p id="exitBtn" onClick={handleOnClickBtns}>Exit</p>
+            {popUp && (
+                <div id="popUpOverlay" onClick={handleOnClickPopUpBtn}>
+                    <div id="popUp">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>番号</td>
+                                    <td>ゲーム数</td>
+                                </tr>
+                            </thead>
+                            <tbody id="popUpTableBody">
+
+                            </tbody>
+                        </table>
+                        <p id="popUpBtn" onClick={handleOnClickPopUpBtn}>閉じる</p>
+                    </div>
+                </div>
+            )}
         </BodyDiv>
     )
 }

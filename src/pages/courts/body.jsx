@@ -78,6 +78,40 @@ function Body() {
                 } 
             }
         }
+
+        // make fair
+        const gameCnt = [];
+        for (let i = 0; i < ppl_num; i++) {
+            gameCnt[i] = 0;
+        }
+
+        for (let i = 0; i < game_num; i++) {
+            for (let j = 0; j < court_num; j++) {
+                const curr_game_list = document.getElementById(`game_${i}_court_${j}`).innerHTML.split(' ');
+                for (let k = 0; k < 4; k++) {
+                    const target = Number(curr_game_list[k]);
+                    gameCnt[target - 1]++;
+                }
+            }
+        }
+        
+        let max_cnt = gameCnt[0], min_cnt = gameCnt[0];
+        for (let i = 1; i < ppl_num; i++) {
+            if (gameCnt[i] < min_cnt) {
+                min_cnt = gameCnt[i];
+            }
+            if (gameCnt[i] > max_cnt) {
+                max_cnt = gameCnt[i];
+            }
+        }
+
+        const diff = max_cnt - min_cnt;
+        if (diff > 2) {
+            fill_table();
+        }
+
+        console.log(`diff : ${diff}`);
+
     }
 
     const make_table_frame = () => {

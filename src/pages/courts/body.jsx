@@ -106,7 +106,7 @@ function Body() {
         }
 
         const diff = max_cnt - min_cnt;
-        if (diff > 2) {
+        if (diff > 3) {
             fill_table();
         }
 

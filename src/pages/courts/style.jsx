@@ -40,7 +40,7 @@ export const BodyDiv = styled.div`
                     font-size: 130%;
                     line-height: 2;
                     font-weight: 700;
-                    color: #AE905E;
+                    color: #000;
                 }   
             }
         }

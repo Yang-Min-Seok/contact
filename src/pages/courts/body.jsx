@@ -1,7 +1,6 @@
 import { BodyDiv } from "./style";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { tab } from "@testing-library/user-event/dist/tab";
 function Body() {
     
     const location = useLocation();
@@ -66,52 +65,19 @@ function Body() {
         setTableData(data);
     };
 
-    // set table
-    if (tableData.length > 0) {
-        for (let i = 0; i < game_num; i++) {
-            for (let j = 0; j < court_num; j++) {
-                const target_td = document.getElementById(`game_${i}_court_${j}`);
-                target_td.innerHTML = ``;
-                for (let k = 0; k < 4; k++) {
-                    const prev_member = target_td.innerHTML;
-                    target_td.innerHTML = prev_member + `${tableData[i][j][k]} `;
-                } 
-            }
-        }
-
-        // make fair
-        const gameCnt = [];
-        for (let i = 0; i < ppl_num; i++) {
-            gameCnt[i] = 0;
-        }
-
-        for (let i = 0; i < game_num; i++) {
-            for (let j = 0; j < court_num; j++) {
-                const curr_game_list = document.getElementById(`game_${i}_court_${j}`).innerHTML.split(' ');
-                for (let k = 0; k < 4; k++) {
-                    const target = Number(curr_game_list[k]);
-                    gameCnt[target - 1]++;
+    const set_table = () => {
+        if (tableData.length > 0) {
+            for (let i = 0; i < game_num; i++) {
+                for (let j = 0; j < court_num; j++) {
+                    const target_td = document.getElementById(`game_${i}_court_${j}`);
+                    target_td.innerHTML = ``;
+                    for (let k = 0; k < 4; k++) {
+                        const prev_member = target_td.innerHTML;
+                        target_td.innerHTML = prev_member + `${tableData[i][j][k]} `;
+                    } 
                 }
             }
         }
-        
-        let max_cnt = gameCnt[0], min_cnt = gameCnt[0];
-        for (let i = 1; i < ppl_num; i++) {
-            if (gameCnt[i] < min_cnt) {
-                min_cnt = gameCnt[i];
-            }
-            if (gameCnt[i] > max_cnt) {
-                max_cnt = gameCnt[i];
-            }
-        }
-
-        const diff = max_cnt - min_cnt;
-        if (diff > 3) {
-            fill_table();
-        }
-
-        console.log(`diff : ${diff}`);
-
     }
 
     const make_table_frame = () => {
@@ -187,6 +153,10 @@ function Body() {
             }
         }
     }
+
+    useEffect(() => {
+        set_table();
+    }, [tableData])
 
     useEffect(() => {
         make_table_frame();

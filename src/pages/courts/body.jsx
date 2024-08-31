@@ -12,6 +12,7 @@ function Body() {
     const [ tableData, setTableData ] = useState([]);
     const [ popUp, setPopUp ] = useState(false);
     
+    // btn control
     const handleOnClickBtns = (e) => {
         const order = e.target.id;
         if (order === 'prevBtn') {
@@ -30,6 +31,7 @@ function Body() {
         }
     }
 
+    // point current game
     const point_curr_game = () => {
         for (let i = 0; i < game_num; i++) {
             const game_tr = document.getElementById(`game_${i}`);
@@ -42,6 +44,7 @@ function Body() {
         curr_game_tr.style.color = '#fff';
     }
 
+    // make ramdom array
     const shuffleArray = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -49,6 +52,7 @@ function Body() {
         }
     };
 
+    // fill table
     const fill_table = () => {
         let data = [];
         let people = Array.from({ length: ppl_num }, (_, i) => i + 1);
@@ -65,6 +69,7 @@ function Body() {
         setTableData(data);
     };
 
+    // set table
     const set_table = () => {
         if (tableData.length > 0) {
             for (let i = 0; i < game_num; i++) {
@@ -80,6 +85,7 @@ function Body() {
         }
     }
 
+    // make frame
     const make_table_frame = () => {
         const table_head = document.getElementById('table_head');
         table_head.innerHTML = ``;
@@ -111,6 +117,7 @@ function Body() {
         }
     }
 
+    // handling pop up event
     const handleOnClickPopUpBtn = (e) => {
         const target = e.target.id;
         if (target === 'popUpBtn' || target === 'popUpOverlay'){
@@ -118,6 +125,7 @@ function Body() {
         }
     }
     
+    // fill pop up table
     const fillPopUpTable = () => {
         if (popUp) {
             const popUpTableBody = document.getElementById('popUpTableBody');
@@ -154,6 +162,7 @@ function Body() {
         }
     }
 
+    // updates
     useEffect(() => {
         set_table();
     }, [tableData])

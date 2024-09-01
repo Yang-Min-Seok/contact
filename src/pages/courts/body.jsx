@@ -13,6 +13,7 @@ function Body() {
     const [ tableData, setTableData ] = useState([]);
     const [ popUp, setPopUp ] = useState(false);
     
+    // btn control
     const handleOnClickBtns = (e) => {
         const order = e.target.id;
         if (order === 'prevBtn') {
@@ -31,6 +32,7 @@ function Body() {
         }
     }
 
+    // point current game
     const point_curr_game = () => {
         for (let i = 0; i < game_num; i++) {
             const game_tr = document.getElementById(`game_${i}`);
@@ -43,6 +45,7 @@ function Body() {
         curr_game_tr.style.color = '#fff';
     }
 
+    // make ramdom array
     const shuffleArray = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -50,6 +53,7 @@ function Body() {
         }
     };
 
+    // fill table
     const fill_table = () => {
         let data = [];
         let people = Array.from({ length: ppl_num }, (_, i) => i + 1);
@@ -67,53 +71,91 @@ function Body() {
     };
 
     // set table
-    if (tableData.length > 0) {
-        for (let i = 0; i < game_num; i++) {
-            for (let j = 0; j < court_num; j++) {
-                const target_td = document.getElementById(`game_${i}_court_${j}`);
-                target_td.innerHTML = ``;
-                for (let k = 0; k < 4; k++) {
-                    const prev_member = target_td.innerHTML;
-                    target_td.innerHTML = prev_member + `${tableData[i][j][k]} `;
-                } 
-            }
-        }
-
-        // make fair
-        const gameCnt = [];
-        for (let i = 0; i < ppl_num; i++) {
-            gameCnt[i] = 0;
-        }
-
-        for (let i = 0; i < game_num; i++) {
-            for (let j = 0; j < court_num; j++) {
-                const curr_game_list = document.getElementById(`game_${i}_court_${j}`).innerHTML.split(' ');
-                for (let k = 0; k < 4; k++) {
-                    const target = Number(curr_game_list[k]);
-                    gameCnt[target - 1]++;
+    const set_table = () => {
+        if (tableData.length > 0) {
+            adjustTable();
+            for (let i = 0; i < game_num; i++) {
+                for (let j = 0; j < court_num; j++) {
+                    const target_td = document.getElementById(`game_${i}_court_${j}`);
+                    target_td.innerHTML = ``;
+                    for (let k = 0; k < 4; k++) {
+                        const prev_member = target_td.innerHTML;
+                        target_td.innerHTML = prev_member + `${tableData[i][j][k]} `;
+                    } 
                 }
             }
         }
-        
-        let max_cnt = gameCnt[0], min_cnt = gameCnt[0];
-        for (let i = 1; i < ppl_num; i++) {
-            if (gameCnt[i] < min_cnt) {
-                min_cnt = gameCnt[i];
-            }
-            if (gameCnt[i] > max_cnt) {
-                max_cnt = gameCnt[i];
-            }
-        }
-
-        const diff = max_cnt - min_cnt;
-        if (diff > 3) {
-            fill_table();
-        }
-
-        console.log(`diff : ${diff}`);
-
     }
 
+    // adjustTable
+    const adjustTable = () => {
+        const gameExpect = Math.floor(game_num * (4 * court_num) / ppl_num);
+        console.log(`gameExpect = ${gameExpect}`);
+
+        const gameCnt = [];
+        for (let i = 0; i <= ppl_num; i++) {
+            gameCnt.push(0);
+        }
+        
+        for (let i = 0; i < game_num; i++) {
+            for (let j = 0; j < court_num; j++) {
+                for (let k = 0; k < 4; k++) {
+                    gameCnt[tableData[i][j][k]]++;
+                }
+            }
+        }
+
+        if (!isFair(gameCnt, gameExpect)) {
+            adjust(gameCnt, gameExpect);
+        }
+    }
+
+    const isFair = (gameCnt, gameExpect) => {
+        for (let i = 1; i <= ppl_num; i++) {
+            if (gameCnt[i] !== gameExpect) {
+                return false;
+            }
+        }
+        return true;
+    } 
+
+    const adjust = (gameCnt, gameExpect) => {
+        for (let i = 1; i <= ppl_num; i++) {
+            if (gameCnt[i] < gameExpect) {
+                for (let j = 1; j <= ppl_num; j++) {
+                    if (gameCnt[j] > gameExpect) {
+                        swap(j, i);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    const swap = (from, to) => {
+        let tempTable = tableData.map(row => row.map(court => court.slice()));;
+        for (let i = 0; i < game_num; i++) {
+            for (let j = 0; j < court_num; j++) {
+                let flag = true;
+                for (let k = 0; k < 4; k++) {
+                    if (tempTable[i][j][k] === to) {
+                        flag = false;
+                    }
+                }
+                if (flag) {
+                    for (let k = 0; k < 4; k++) {
+                        if (tempTable[i][j][k] === from) {
+                            tempTable[i][j][k] = to;
+                            setTableData(tempTable);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // make frame
     const make_table_frame = () => {
         const table_head = document.getElementById('table_head');
         table_head.innerHTML = ``;
@@ -145,6 +187,7 @@ function Body() {
         }
     }
 
+    // handling pop up event
     const handleOnClickPopUpBtn = (e) => {
         const target = e.target.id;
         if (target === 'popUpBtn' || target === 'popUpOverlay'){
@@ -152,6 +195,7 @@ function Body() {
         }
     }
     
+    // fill pop up table
     const fillPopUpTable = () => {
         if (popUp) {
             const popUpTableBody = document.getElementById('popUpTableBody');
@@ -188,10 +232,15 @@ function Body() {
         }
     }
 
+    // updates
     useEffect(() => {
         make_table_frame();
         fill_table();
     }, [])
+
+    useEffect(() => {
+        set_table();
+    }, [tableData])
 
     useEffect(() => {
         point_curr_game();

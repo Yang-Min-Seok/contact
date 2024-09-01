@@ -5,6 +5,10 @@
 バドミントンコートの配分WEBサイト
 
 #### リンク：https://contact-eta-gules.vercel.app/
+#### QR code
+
+![qrcode_contact-eta-gules vercel app](https://github.com/user-attachments/assets/f6bf6818-3361-4a1c-aba9-a12221e81ff7)
+
 
 ---
 

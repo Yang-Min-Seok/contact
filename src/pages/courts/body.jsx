@@ -1,6 +1,7 @@
 import { BodyDiv } from "./style";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { tab } from "@testing-library/user-event/dist/tab";
 function Body() {
     
     const location = useLocation();
@@ -72,6 +73,7 @@ function Body() {
     // set table
     const set_table = () => {
         if (tableData.length > 0) {
+            adjustTable();
             for (let i = 0; i < game_num; i++) {
                 for (let j = 0; j < court_num; j++) {
                     const target_td = document.getElementById(`game_${i}_court_${j}`);
@@ -80,6 +82,74 @@ function Body() {
                         const prev_member = target_td.innerHTML;
                         target_td.innerHTML = prev_member + `${tableData[i][j][k]} `;
                     } 
+                }
+            }
+        }
+    }
+
+    // adjustTable
+    const adjustTable = () => {
+        const gameExpect = Math.floor(game_num * (4 * court_num) / ppl_num);
+        console.log(`gameExpect = ${gameExpect}`);
+
+        const gameCnt = [];
+        for (let i = 0; i <= ppl_num; i++) {
+            gameCnt.push(0);
+        }
+        
+        for (let i = 0; i < game_num; i++) {
+            for (let j = 0; j < court_num; j++) {
+                for (let k = 0; k < 4; k++) {
+                    gameCnt[tableData[i][j][k]]++;
+                }
+            }
+        }
+
+        if (!isFair(gameCnt, gameExpect)) {
+            adjust(gameCnt, gameExpect);
+        }
+    }
+
+    const isFair = (gameCnt, gameExpect) => {
+        for (let i = 1; i <= ppl_num; i++) {
+            if (gameCnt[i] !== gameExpect) {
+                return false;
+            }
+        }
+        return true;
+    } 
+
+    const adjust = (gameCnt, gameExpect) => {
+        for (let i = 1; i <= ppl_num; i++) {
+            if (gameCnt[i] < gameExpect) {
+                for (let j = 1; j <= ppl_num; j++) {
+                    if (gameCnt[j] > gameExpect) {
+                        swap(j, i);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    const swap = (from, to) => {
+        let tempTable = tableData.map(row => row.map(court => court.slice()));;
+        for (let i = 0; i < game_num; i++) {
+            for (let j = 0; j < court_num; j++) {
+                let flag = true;
+                for (let k = 0; k < 4; k++) {
+                    if (tempTable[i][j][k] === to) {
+                        flag = false;
+                    }
+                }
+                if (flag) {
+                    for (let k = 0; k < 4; k++) {
+                        if (tempTable[i][j][k] === from) {
+                            tempTable[i][j][k] = to;
+                            setTableData(tempTable);
+                            return;
+                        }
+                    }
                 }
             }
         }
@@ -164,13 +234,13 @@ function Body() {
 
     // updates
     useEffect(() => {
-        set_table();
-    }, [tableData])
-
-    useEffect(() => {
         make_table_frame();
         fill_table();
     }, [])
+
+    useEffect(() => {
+        set_table();
+    }, [tableData])
 
     useEffect(() => {
         point_curr_game();

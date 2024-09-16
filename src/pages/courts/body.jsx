@@ -10,25 +10,7 @@ function Body() {
     const gameNum = Number(location.state.game_num);
     const [ currGame, setCurrGame ] = useState(0);
     const [ popUp, setPopUp ] = useState(false);
-    
-    // btn control
-    const handleOnClickBtns = (e) => {
-        const order = e.target.id;
-        if (order === 'prevBtn') {
-            if (currGame !== 0) {
-                setCurrGame(currGame - 1);
-            }
-        } else if (order === 'nextBtn') {
-            if(currGame !== gameNum - 1) {
-                setCurrGame(currGame + 1);
-            }
-        } else if (order === 'exitBtn') {
-            const ans = window.confirm('本当に戻りますか？');
-            if (ans) {
-                navigate('/');
-            }
-        }
-    }
+    const [ gameCnt, setGameCnt ] = useState([]);
 
     // point current game
     const pointCurrGame = () => {
@@ -75,6 +57,105 @@ function Body() {
         }
     }
 
+    // fill up table
+    const fillUpTable = () => {
+        // 게임 참가 수 카운트를 위한 배열
+        const gamePerPpl = [];
+        // 배열 초기화
+        for (let i = 0; i < pplNum; i++) {
+            gamePerPpl.push(0);
+        }
+        
+        // 한 타임에 들어가는 인원 수 계산
+        const participants = courtNum * 4;
+        
+        for (let i = 0; i < gameNum; i++) {
+            // 현재 게임 멤버 뽑기
+            const currGameMember = getSortedIndexes(gamePerPpl, participants);
+            // 현재 게임 멤버 랜덤 돌리기
+            const currGameMemberRandom = getRandomNumbers(currGameMember);
+            // 테이블에 채우기
+            printTable(currGameMemberRandom, i, participants);
+            // 게임 참가 수 카운트
+            for (let i = 0; i < participants; i++) {
+                gamePerPpl[currGameMemberRandom[i]]++;
+            }
+        }
+        setGameCnt(gamePerPpl);
+    }
+    
+    const printTable = (currGameMemberRandom, gameIdx, participants) => {
+        let courtIdx = 0;
+        let memberCount = 0; // 코트 내 멤버 수를 추적
+    
+        for (let i = 0; i < participants; i++) {
+            // 4명의 멤버가 배치된 후에는 다음 코트로 이동
+            if (i > 0 && i % 4 === 0) {
+                courtIdx++;
+                memberCount = 0; // 다음 코트로 넘어가면 멤버 카운트 초기화
+            }
+
+            // 넣을 tr 태그 확보
+            const target = document.getElementById(`game${gameIdx}court${courtIdx}`);
+    
+            // 해당 코트의 innerHTML을 업데이트
+            if (target) {
+                if (memberCount === 0) {
+                    target.innerHTML = ''; // 코트의 innerHTML을 초기화
+                }
+    
+                target.innerHTML += `
+                    ${currGameMemberRandom[i] + 1}
+                `;
+    
+                memberCount++;
+            }
+        }
+    }
+
+    const getSortedIndexes = (gamePerPpl, k) => {
+        // 인덱스를 배열로 변환
+        const indexes = gamePerPpl.map((_, index) => index);
+
+        // gamePerPpl 값을 기준으로 인덱스 배열을 정렬
+        indexes.sort((a, b) => gamePerPpl[a] - gamePerPpl[b]);
+
+        // 정렬된 인덱스 중 상위 k개 반환
+        return indexes.slice(0, k);
+    }
+
+    const getRandomNumbers = (arr) => {
+        // 전달받은 배열 복사 (원본 배열을 수정하지 않기 위해)
+        const shuffled = [...arr];
+
+        // Fisher-Yates 알고리즘을 사용해 배열을 랜덤하게 섞음
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+
+        return shuffled;
+      }
+    
+    // pointing currGame
+    const handleOnClickBtns = (e) => {
+        const order = e.target.id;
+        if (order === 'prevBtn') {
+            if (currGame !== 0) {
+                setCurrGame(currGame - 1);
+            }
+        } else if (order === 'nextBtn') {
+            if(currGame !== gameNum - 1) {
+                setCurrGame(currGame + 1);
+            }
+        } else if (order === 'exitBtn') {
+            const ans = window.confirm('本当に戻りますか？');
+            if (ans) {
+                navigate('/');
+            }
+        }
+    }
+
     // handling pop up event
     const handleOnClickPopUpBtn = (e) => {
         const target = e.target.id;
@@ -83,8 +164,8 @@ function Body() {
         }
     }
     
-    // fill pop up table
-    const fillPopUpTable = () => {
+    // make pop up Frame
+    const makePopUpFrame = () => {
         if (popUp) {
             const popUpTableBody = document.getElementById('popUpTableBody');
             popUpTableBody.innerHTML = ``;
@@ -97,25 +178,15 @@ function Body() {
                     </tr>
                 `
             }
-
-            const gameCnt = [];
-            for (let i = 0; i < pplNum; i++) {
-                gameCnt.push(0);
-            }
-            
-            for (let i = 0; i < gameNum; i++) {
-                for (let j = 0; j < courtNum; j++) {
-                    const currGameList = document.getElementById(`game${i}court${j}`).innerHTML.split(' ');
-                    for (let k = 0; k < 4; k++) {
-                        const target = Number(currGameList[k]);
-                        gameCnt[target - 1]++;
-                    }
-                }
-            }
-
+        }
+    }
+    
+    // fill pop up table
+    const fillPopUpTable = () => {
+        if (popUp) {
             for (let i = 0; i < pplNum; i++) {
                 const target = document.getElementById(`ppl${i}game`);
-                target.innerText = gameCnt[i];
+                target.innerHTML = `${gameCnt[i]}`;
             }
         }
     }
@@ -123,13 +194,17 @@ function Body() {
     // updates
     useEffect(() => {
         makeTableFrame();
+        fillUpTable();
     }, [])
 
+    // pointing currGame
     useEffect(() => {
         pointCurrGame();
     }, [currGame])
 
+    // popUp
     useEffect(() => {
+        makePopUpFrame();
         fillPopUpTable();
     }, [popUp])
 

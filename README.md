@@ -66,6 +66,9 @@
 
 <img width="300" alt="스크린샷 2024-09-09 19 42 12" src="https://github.com/user-attachments/assets/334061e6-6d6e-4504-a618-3a2d0e477620">
 <img width="300" alt="스크린샷 2024-09-09 19 42 55" src="https://github.com/user-attachments/assets/6fe4ad1a-a399-48bd-bf2e-c672b470cd16">
+
+---
+
 <img width="300" alt="스크린샷 2024-09-16 13 51 47" src="https://github.com/user-attachments/assets/e813a58d-b720-44cc-ab45-96a6374c8acc">
 <img width="300" alt="스크린샷 2024-09-16 14 01 30" src="https://github.com/user-attachments/assets/f067d874-8e57-466f-bcb3-b802afb51ab9">
 

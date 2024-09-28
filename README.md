@@ -14,41 +14,37 @@
 
 #### 初期画面：コート数、人数、ゲーム数の入力
 
-<img width="430" alt="스크린샷 2024-09-16 13 52 21" src="https://github.com/user-attachments/assets/bbeb37e8-b937-4fae-8201-78d8b67ce687">
-
+<img width="432" alt="스크린샷 2024-09-28 17 20 09" src="https://github.com/user-attachments/assets/2370a284-b818-42cb-a861-ebddca084fec">
 
 ---
 
 #### 初期画面：正しくない情報の入力を防止
 
-<img width="428" alt="스크린샷 2024-09-16 13 52 38" src="https://github.com/user-attachments/assets/f416eea8-cb95-4450-b4bb-4a805590a36f">
-
+<img width="433" alt="스크린샷 2024-09-28 17 20 27" src="https://github.com/user-attachments/assets/c87029b9-eff4-428c-beb4-8e5f531e0b5d">
 
 ---
 
 #### 初期画面：正しい情報の入力が終わったらスタートボタン活性化
 
-<img width="430" alt="스크린샷 2024-09-16 13 52 52" src="https://github.com/user-attachments/assets/6aa9dd47-4368-4ef9-8a3a-6255587eccac">
+<img width="433" alt="스크린샷 2024-09-28 17 20 43" src="https://github.com/user-attachments/assets/e9ab5c92-87b0-4320-9e24-2a9079cd10e4">
 
 ---
 
 #### 配分画面：コートごとの配分状態を確認
 
-<img width="431" alt="스크린샷 2024-09-16 13 53 03" src="https://github.com/user-attachments/assets/a8d70d91-3026-4ec9-95bf-b2952d55120e">
-
+<img width="431" alt="스크린샷 2024-09-28 17 20 57" src="https://github.com/user-attachments/assets/5cc1aaec-5dcf-4c45-9495-64e0450da752">
 
 ---
 
 #### ポップアップ画面：「一人当たりのゲーム数を見る」ボタンのクリック時
 
-<img width="432" alt="스크린샷 2024-09-16 13 53 12" src="https://github.com/user-attachments/assets/aa04e6ef-6db2-4116-9842-ebfa45c9f481">
-
+<img width="426" alt="스크린샷 2024-09-28 17 21 07" src="https://github.com/user-attachments/assets/a7405add-24a2-48f7-b1bb-c46b3181eb34">
 
 ---
 
 #### 配分画面：現時点のゲームに協調効果
 
-<img width="432" alt="스크린샷 2024-09-16 13 53 24" src="https://github.com/user-attachments/assets/6d3676c9-15e1-4b7c-96a0-3f0baeb6f79b">
+<img width="432" alt="스크린샷 2024-09-28 17 21 18" src="https://github.com/user-attachments/assets/b8e457b2-adef-4552-ad32-59907c32f9c5">
 
 ---
 
@@ -62,3 +58,5 @@
 |2024年9月1日|第四リリース|v 1.1.0|コート配分の公平性（アルゴリズム改善）|
 |2024年9月16日|第五リリース|v 1.2.0|コート配分アルゴリズム全面的な変更（公平性、均一度解決完了）|
 |2024年9月28日|第六リリース|v 1.2.1|直前のゲームの組みと被っている組みがいればもう一度ランダムで組み生成するコード追加|
+
+---

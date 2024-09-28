@@ -65,23 +65,62 @@ function Body() {
         for (let i = 0; i < pplNum; i++) {
             gamePerPpl.push(0);
         }
-        
+
         // 한 타임에 들어가는 인원 수 계산
         const participants = courtNum * 4;
-        
+
+        // 이전 게임 조합 기록용 배열
+        const prevGameComb = [];
+        // 이전 게임 조합 초기화
+        for (let i = 0; i < participants; i++) {
+            prevGameComb.push(0);
+        }
+
+        // 두 번째 부터 게임 랜덤 배정
         for (let i = 0; i < gameNum; i++) {
             // 현재 게임 멤버 뽑기
             const currGameMember = getSortedIndexes(gamePerPpl, participants);
+
             // 현재 게임 멤버 랜덤 돌리기
-            const currGameMemberRandom = getRandomNumbers(currGameMember);
+            let currGameMemberRandom = getRandomNumbers(currGameMember);
+
+            // 전 게임과 4명이 모두 같은 조합이 있으면
+            if (duplicatedPairExists(prevGameComb, currGameMemberRandom, participants)) {
+                // 한번 더 랜덤 생성
+                currGameMemberRandom = getRandomNumbers(currGameMember);
+            }
+
             // 테이블에 채우기
             printTable(currGameMemberRandom, i, participants);
-            // 게임 참가 수 카운트
+
+            // 게임 참가 수 카운트, 게임 조합 기록
             for (let i = 0; i < participants; i++) {
                 gamePerPpl[currGameMemberRandom[i]]++;
+                prevGameComb[i] = currGameMemberRandom[i];
             }
         }
+
+        // popUp 반영용
         setGameCnt(gamePerPpl);
+    }
+
+    const duplicatedPairExists = (prevGameComb, currGameMemberRandom, participants) => {
+        for (let i = 0; i < participants; i += 2) {
+            const prevPair = prevGameComb.slice(i, i + 2);
+            for (let j = 0; j < participants; j += 2) {
+                const currPair = currGameMemberRandom.slice(j, j + 2);
+                if (isSamePair(prevPair, currPair)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    const isSamePair = (prevPair, currPair) => {
+        // 두 배열의 요소가 동일한지 확인
+        return (prevPair[0] === currPair[0] && prevPair[1] === currPair[1]) || 
+               (prevPair[0] === currPair[1] && prevPair[1] === currPair[0]);
     }
     
     const printTable = (currGameMemberRandom, gameIdx, participants) => {

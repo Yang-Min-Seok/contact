@@ -76,27 +76,33 @@ function Body() {
             prevGameComb.push(0);
         }
 
-        // 두 번째 부터 게임 랜덤 배정
-        for (let i = 0; i < gameNum; i++) {
+        // 게임 랜덤 배정
+        let gameIdx = 0;
+        
+        while (gameIdx < gameNum) {
             // 현재 게임 멤버 뽑기
             const currGameMember = getSortedIndexes(gamePerPpl, participants);
 
             // 현재 게임 멤버 랜덤 돌리기
             let currGameMemberRandom = getRandomNumbers(currGameMember);
 
-            // 전 게임과 4명이 모두 같은 조합이 있으면
+            // 전 게임과 같은 조합(파트너 기준)이 있으면
             if (duplicatedPairExists(prevGameComb, currGameMemberRandom, participants)) {
-                // 한번 더 랜덤 생성
+                // 다시 랜덤 생성
                 currGameMemberRandom = getRandomNumbers(currGameMember);
             }
+            // 전 게임과 겹치는 조합이 없으면
+            else {
+                // 테이블에 채우기
+                printTable(currGameMemberRandom, gameIdx, participants);
 
-            // 테이블에 채우기
-            printTable(currGameMemberRandom, i, participants);
-
-            // 게임 참가 수 카운트, 게임 조합 기록
-            for (let i = 0; i < participants; i++) {
-                gamePerPpl[currGameMemberRandom[i]]++;
-                prevGameComb[i] = currGameMemberRandom[i];
+                // 게임 참가 수 카운트, 게임 조합 기록
+                for (let i = 0; i < participants; i++) {
+                    gamePerPpl[currGameMemberRandom[i]]++;
+                    prevGameComb[i] = currGameMemberRandom[i];
+                }
+                // gameIdx 증가
+                gameIdx++;
             }
         }
 

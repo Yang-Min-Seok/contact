@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import lineShare from "../../assets/images/lineShare.png";
 
 export const BodyDiv = styled.div`
     height: 800px;
@@ -62,35 +63,50 @@ export const BodyDiv = styled.div`
     div:nth-child(3) {
         display: flex;
         width: 80%;
-        margin: 0 auto;
+        margin: 3% auto;
         justify-content: space-around;
         p{
             margin: 0 auto;
-            margin-top: 5%;
-            font-size: 120%;
-            line-height: 3;
-            width: 27%;
+            font-size: 130%;
+            line-height: 3.5;
+            width: 25%;
             text-align: center;
             border: 2px solid brown;
             box-sizing: border-box;
-            border-radius: 20px;
+            border-radius: 30%;
             font-weight: 600;
             color: #000;
         }
     }
 
-    p:nth-child(4) {
-        margin: 0 auto;
-        margin-top: 3%;
-        font-size: 120%;
-        line-height: 2.5;
-        width: 30%;
-        text-align: center;
-        border: 2px solid red;
-        box-sizing: border-box;
-        border-radius: 20px;
-        font-weight: 600;
+    div:nth-child(4) {
+        width: 80%;
+        display: flex;
+        margin: 3% auto;
+        justify-content: space-around;
+        p {
+            margin: 0 auto;
+            font-size: 130%;
+            line-height: 3.5;
+            width: 25%;
+            text-align: center;
+            border: 2px solid red;
+            box-sizing: border-box;
+            border-radius: 30%;
+            font-weight: 600;
+            color: #000;
+        }
+        p:nth-child(1), p:nth-child(3) {
+            border: 2px solid brown;
+        }
+        p:nth-child(1) {
+            background-image: url(${lineShare});
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
     }
+
 
     // pop up
     #popUpOverlay{

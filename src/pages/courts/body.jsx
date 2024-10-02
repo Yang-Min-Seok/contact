@@ -198,6 +198,14 @@ function Body() {
             if (ans) {
                 navigate('/');
             }
+        } else if (order === 'shuffleBtn') {
+            const ans = window.confirm('もう一度混ぜますか？(戻れません)');
+            if (ans) {
+                fillUpTable();
+            }
+        } else if (order === 'shareBtn') {
+            const dynamicUrl = `https://social-plugins.line.me/lineit/share?url=https://contact-eta-gules.vercel.app/`;
+            window.open(dynamicUrl, "_blank", "oopener,noreferrer");
         }
     }
 
@@ -268,7 +276,11 @@ function Body() {
                 <p id="prevBtn" onClick={handleOnClickBtns}>Prev</p>
                 <p id="nextBtn" onClick={handleOnClickBtns}>Next</p>
             </div>
-            <p id="exitBtn" onClick={handleOnClickBtns}>Exit</p>
+            <div>
+                <p id="shareBtn" onClick={handleOnClickBtns}></p>
+                <p id="exitBtn" onClick={handleOnClickBtns}>Quit</p>
+                <p id="shuffleBtn" onClick={handleOnClickBtns}>Shuffle</p>
+            </div>
             {popUp && (
                 <div id="popUpOverlay" onClick={handleOnClickPopUpBtn}>
                     <div id="popUp">

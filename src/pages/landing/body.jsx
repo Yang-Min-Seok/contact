@@ -52,7 +52,7 @@ function Body() {
 
     const handle_onclick_start_btn = (e) => {
         if (is_proper_num(court_num, ppl_num, game_num)) {
-            navigate(`/courts`, {state : {court_num : court_num, ppl_num : ppl_num, game_num : game_num}});
+            navigate(`/shuffle`, {state : {court_num : court_num, ppl_num : ppl_num, game_num : game_num}});
         }
     };
 
